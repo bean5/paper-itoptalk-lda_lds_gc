@@ -1,0 +1,23 @@
+I use the methods used by Hall et al. (2008)
+to the corpus of LDS General Conference Talks. 
+
+\subsection{Data Analysis}
+Topic models can coupled with post-hoc algorithms to produce recommendation systems (Blei 2007; Blei et al. 2003). %\shortcite{Blei2007Handbook}\shortcite{Blei:2003:LDA:944919.944937}.
+ One well-known topic model is \emph{Latent Dirichlet Allocation}, or \emph{LDA}, which is a model of word-topic assignments. From this model post-hoc algorithms extract various meta-data including probability of a topic (overall or in a document), and probability of a word in a topic. This step is fast and effective. Upon having the probability distribution over topics, machine learning approaches including nearest neighbor approaches (e.g. k-NN) can locate the most relevant documents. Since probability distributions are points that exist within the \textit{Probability Simplex}, or \emph{T}-space 
+(Krstovski et al. 2013),  %\shortcite{Krstovski2013efficient}
+metrics suited for the space such as the \emph{Jensen-Shannon divergence} or the \emph{Hellinger distance} are viable metrics for determining distance between points. Distance is interpreted as dissimilarity (i.e. closer points are considered more similar than two distant points). 
+
+Topic models are not required for document recommendation. Algorithms that use token frequency and inverse document frequency, or \emph{TF-IDF}, can also be used. In such cases, documents with the similar distributions of keywords can be considered to be similar. 
+
+
+%\subsection {Topic Modeling Over Time}
+Interestingly, a subset of topic modeling aims to analyze topical trends over time. Such work includes that of Hall et al. (2008) %\shortcite{hall-jurafsky-manning:2008:EMNLP} 
+where entropy, applied on chronological disjoint sets of texts, is used as a metric of showing broadening/narrowing of topics over time. They demonstrated that the \emph{Jensen-Shannon divergence} between \emph{venue pairings}\footnote{or disjoint sets of documents} could be used to measure level of similarity. They aptly demonstrated that topic entropy, when applied to topics on a per-year basis, could be used to describe the ebb and flow of each topic's \emph{popularity} over time. As a result, entropy of entire scholarly conferences can be plotted over time and compared. They showed that two separate conferences were converging to the have similar entropy of topics as time progressed.
+%Once shortcite is working, use it more thoroughly in the before paragraph.
+
+In precursory work, by following the methods outlined by Hall et al. (2008), I found that the same technique could be generalized further. Instead of dividing data into venues based on conference, I divided based on gender of author, then further divided based on year of authorship. Like this work, LDA was run on this same dataset. After some trial and error, I determined that 150 was appropriate for the number of expected topics (Bean et al. 2013b). \textit{This is what inspired me to want to do this project.}
+
+%\subsection{Text Mining on Similar Datasets}
+Less automated text mining on LDS religious documents includes Hilton III (2008a).  %\cite{hilton-2008-intertext-abinadi}
+Hilton III aimed to discover what he calls \emph{intertextual similarity} between authors of LDS-specific texts. In his work, Hilton III focused on \emph{The Book of Mormon}, although he later demonstrated that the methodology could locate results between \emph{The Holy Bible} and \emph{The Book of Mormon} %\cite{hilton_2008_intertext_psalms} 
+(Hilton III 2008b). Although topic models were not employed in his work, it probably could have benefited from them. Computational methods were involved, but only for portions of the process.
