@@ -1,0 +1,75 @@
+\section {Introduction}
+%\begin{quote}
+%\end{quote}
+
+
+%%\subsection {What's the problem?}
+The Corpus of LDS General Conference Talks, hereafter referred \emph{CLDSGCT} increases bi-annually. Currently, it consists of over 1400 talks. Since members of the Church of Jesus Christ of Latter-day Saints are admonished to study from these general conference talks, the ability to navigate through them and make connections becomes increasingly difficult over time as the amount of information increases. Advanced search and recommendation systems could be used to alleviate this burden.
+
+
+%%\subsection {Who cares?}
+At least 2 websites exist that allow members of the LDS community and the general public to search for talks by keyword, date of authorship, and even speaker. They are (1) LDS.org which is the official website for the LDS church and (2) scriptures.byu.edu which is provided by Brigham Young University, a private school owned by the LDS church. LDS.org attempts to support topic-based searches (e.g. ``Talks on Faith''), but rather than searching by topic, this simply performs the search in a restricted ``talks'' space. The only way the site seems to allow users to search by topic is by year, so in order to find a list of all talks that are tagged as being about a topic (e.g. `Faith'), it would require that the user load over 88 webpages. Both LDS.org and scriptures.byu.edu provide Lucene-like search functionality (McCandless et al 2010; Luke 2013) and cross-references, but neither website provides a topical index for general conference talks.
+
+My final project aims to produce an intuitive, trusted, easy-to-use topic index, \emph{iTopTalk}, for LDS General Conference talks. As a result, any website that allows users to read general conference talks should be able to use \emph{iTopTalk}. The parameters of the the topic model will be inferred via \emph{(Collapsed) Gibbs Sampling}
+(Porteous et al. 2008), %\shortcite{Porteous:2008:FCG:1401890.1401960} 
+ although \emph{Variation Inference} could be used as well (Blei et al. 2006). %\shortcite{blei2006variational}
+%. We use Collapsed Gibbs sampling in this work. 
+\emph{iTopTalk} will be an LDA-based system, trained for general conference talks. Since no recommendation system exists in this domain, it is novel. 
+
+\emph{iTopTalk} is a natural result of \emph{LDA} which is a machine-learned topic model. \emph{LDA} does not make an effort to label topics, but it does provide as output a list of key words for each topic. I will report key topics and the labels I give them. I will analyze these topics and help the reader understand (and perhaps appreciate) why \emph{LDA} clusters the words that it does. 
+
+\section {Background}
+Topic models can coupled with post-hoc algorithms to produce recommendation systems (Blei 2007; Blei et al. 2003). %\shortcite{Blei2007Handbook}\shortcite{Blei:2003:LDA:944919.944937}.
+ One well-known topic model is \emph{Latent Dirichlet Allocation}, or \emph{LDA}, which is a model of word-topic assignments. From this model post-hoc algorithms extract various meta-data including probability of a topic (overall or in a document), and probability of a word in a topic. This step is fast and effective. Upon having the probability distribution over topics, machine learning approaches including nearest neighbor approaches (e.g. k-NN) can locate the most relevant documents. Since probability distributions are points that exist within the \textit{Probability Simplex}, or \emph{T}-space 
+(Krstovski et al. 2013),  %\shortcite{Krstovski2013efficient}
+metrics suited for the space such as the \emph{Jensen-Shannon divergence} or the \emph{Hellinger distance} are viable metrics for determining distance between points. Distance is interpreted as dissimilarity (i.e. closer points are considered more similar than two distant points). 
+
+Topic models are not required for document recommendation. Algorithms that use token frequency and inverse document frequency, or \emph{TF-IDF}, can also be used. In such cases, documents with the similar distributions of keywords can be considered to be similar. 
+
+
+%\subsection {Topic Modeling Over Time}
+Interestingly, a subset of topic modeling aims to analyze topical trends over time. Such work includes that of Hall et al. (2008) %\shortcite{hall-jurafsky-manning:2008:EMNLP} 
+where entropy, applied on chronological disjoint sets of texts, is used as a metric of showing broadening/narrowing of topics over time. They demonstrated that the \emph{Jensen-Shannon divergence} between \emph{venue pairings}\footnote{or disjoint sets of documents} could be used to measure level of similarity. They aptly demonstrated that topic entropy, when applied to topics on a per-year basis, could be used to describe the ebb and flow of each topic's \emph{popularity} over time. As a result, entropy of entire scholarly conferences can be plotted over time and compared. They showed that two separate conferences were converging to the have similar entropy of topics as time progressed.
+%Once shortcite is working, use it more thoroughly in the before paragraph.
+
+In precursory work, by following the methods outlined by Hall et al. (2008), I found that the same technique could be generalized further. Instead of dividing data into venues based on conference, I divided based on gender of author, then further divided based on year of authorship. Like this work, LDA was run on this same dataset. After some trial and error, I determined that 150 was appropriate for the number of expected topics (Bean et al. 2013b). \textit{This is what inspired me to want to do my final project using \emph{LDA} to produce an index of topics.}
+
+%\subsection{Text Mining on Similar Datasets}
+Less automated text mining on LDS religious documents includes Hilton III (2008a).  %\cite{hilton-2008-intertext-abinadi}
+Hilton III aimed to discover what he calls \emph{intertextual similarity} between authors of LDS-specific texts. In his work, Hilton III focused on \emph{The Book of Mormon}, although he later demonstrated that the methodology could locate results between \emph{The Holy Bible} and \emph{The Book of Mormon} %\cite{hilton_2008_intertext_psalms} 
+(Hilton III 2008b). Although topic models were not employed in his work, it probably could have benefited from them. Computational methods were involved, but only for portions of the process.
+
+
+\section{Method}
+I will use the methods used by Hall et al. (2008)
+to the corpus of LDS General Conference Talks. The dataset contains the same documents as those used by Mark Davies in his Corpus of LDS General Conference Talks available at http://corpus.byu.edu/gc/. The date of authorship for these talks are ranges of either 1846-1886 or 1942-2013. They total over 1400 talks. Some were extemporaneously given while others were scripted. The intended audience is generally only either the male members of the church, female members of the church, or the entire church. The size and the extent of internationality of the audience is increasing over time. The LDS church currently has over 15 million members, with the majority outside the United States.
+
+To determine whether \emph{iTopTalk} is working, I will manually inspect and label the output and explore documents that are tagged with key topics. I propose to perform the following key tasks. Already completed steps are marked with an asterisk.
+\begin{itemize}
+  \item *use \emph{Collapsed Gibbs Sampling} to infer the parameters of an \emph{LDA} model,
+  \item *use the Mallet toolkit will be used to run collapsed Gibbs sampling*,
+  \item label at least 50 topics,
+  \item explore at least 10 documents which have one of the 50 as their main topic.
+\end{itemize}
+
+
+\section {Results \& Evaluation}
+Since labelling is a manual process, it can lead to some bias. I'll ask my wife whether she agrees with my labellings. 
+
+By using the aforementioned method, this study aims to produce the following:
+	\begin{quote}
+		${1}:$ Produce \emph{iTopTalk}, an \emph{LDA}-based index of topics for LDS General Conference talks.
+		
+		${2}:$ Produce a partially labelled set of topics.
+	\end{quote}
+
+\section {Timeline}
+
+Following is my proposed time-line, which generally allocates 2 weeks to each core task. Some tasks will be done simultaneously. Only completion dates are listed.
+
+\begin{description}
+    \item [Already Completed] Pre-process and warehouse corpus;
+    \item [November 15] LDA Model stored in flat file;
+    \item [November 31] Label 50 topics
+    \item [December 14] Final report completed. Since this is also my sister's birthday, I also plan to give her a call.
+\end{description}
