@@ -1,0 +1,18 @@
+proposal:
+  build: .
+  command: make
+  working_dir: /main
+  volumes:
+    - './proposal/:/main'
+final:
+  build: .
+  command: make
+  working_dir: /main
+  volumes:
+    - './final/:/main'
+shell:
+  build: .
+  command: bash
+  working_dir: /main
+  volumes:
+    - './:/main'
