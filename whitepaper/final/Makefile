@@ -4,6 +4,7 @@ build:
 	@-make simpleClean
 	make project.pdf
 	@-make simpleClean
+	cp project.pdf /output/final.pdf
 
 project.pdf:
 	pdflatex project

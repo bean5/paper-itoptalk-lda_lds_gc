@@ -6,16 +6,19 @@ services:
     command: make
     working_dir: /main
     volumes:
-      - './proposal/:/main'
+      - './whitepaper/proposal:/main'
+      - './output/:/output'
   final:
     build: .
     command: make
     working_dir: /main
     volumes:
-      - './final/:/main'
+      - './whitepaper/final:/main'
+      - './output/:/output'
   shell:
     build: .
     command: bash
     working_dir: /main
     volumes:
-      - './:/main'
+      - './whitepaper/:/main'
+      - './output/:/output'
