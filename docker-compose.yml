@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   proposal:
     build: .
@@ -7,18 +5,18 @@ services:
     working_dir: /main
     volumes:
       - './whitepaper/proposal:/main'
-      - './output/:/output'
+      - './output:/output'
   final:
     build: .
     command: make
     working_dir: /main
     volumes:
       - './whitepaper/final:/main'
-      - './output/:/output'
+      - './output:/output'
   shell:
     build: .
     command: bash
     working_dir: /main
     volumes:
-      - './whitepaper/:/main'
-      - './output/:/output'
+      - './whitepaper:/main'
+      - './output:/output'
